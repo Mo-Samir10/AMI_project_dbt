@@ -35,3 +35,16 @@ Ensure your `profiles.yml` is configured to connect to the `SMART_GRID_DB` Snowf
 **2. Install Dependencies**
 ```bash
 dbt deps
+```
+
+**3. Build the Pipeline**
+Run the full project (builds staging, dimensions, facts, and incremental anomaly checks):
+```bash
+dbt run
+```
+
+**4. Run Data Quality Tests**
+Execute uniqueness and not-null assertions against the generated data warehouse:
+```bash
+dbt test
+```
