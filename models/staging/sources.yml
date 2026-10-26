@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: raw
+    database: SMART_GRID_DB
+    schema: RAW
+    tables:
+      - name: meter_readings
+      - name: transformer_readings
+      - name: grid_meters
+      - name: grid_transformers
+      - name: sim_truth

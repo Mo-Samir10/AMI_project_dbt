@@ -1,0 +1,8 @@
+version: 2
+models:
+  - name: anomaly_flags
+    columns:
+      - name: anomaly_id
+        tests:
+          - unique
+          - not_null
