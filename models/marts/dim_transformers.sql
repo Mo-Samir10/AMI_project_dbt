@@ -1,4 +1,4 @@
-SELECT 
+SELECT
     transformer_id,
     feeder_id,
     substation_id,
@@ -8,4 +8,4 @@ SELECT
     lat,
     lon
 FROM {{ source('raw', 'grid_transformers') }}
-QUALIFY ROW_NUMBER() OVER (PARTITION BY transformer_id ORDER BY transformer_id) = 1
+QUALIFY ROW_NUMBER() OVER (PARTITION BY transformer_id ORDER BY file_date DESC) = 1

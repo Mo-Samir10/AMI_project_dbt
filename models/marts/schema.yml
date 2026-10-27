@@ -1,8 +1,74 @@
 version: 2
+
 models:
+  - name: dim_transformers
+    columns:
+      - name: transformer_id
+        tests:
+          - unique
+          - not_null
+      - name: capacity_kw
+        tests:
+          - not_null
+
+  - name: dim_meters
+    columns:
+      - name: meter_id
+        tests:
+          - not_null
+      - name: transformer_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_transformers')
+                field: transformer_id
+
+  - name: fact_transformer_readings
+    columns:
+      - name: transformer_id
+        tests:
+          - not_null
+      - name: reading_ts
+        tests:
+          - not_null
+
+  - name: fact_meter_readings
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: ['meter_id', 'reading_ts']
+          config:
+            severity: warn
+    columns:
+      - name: meter_id
+        tests:
+          - not_null
+      - name: kw
+        tests:
+          - not_null
+
   - name: anomaly_flags
     columns:
       - name: anomaly_id
         tests:
           - unique
           - not_null
+      - name: event_type
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['overload', 'line_drop', 'theft']
+      - name: transformer_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_transformers')
+                field: transformer_id
+
+  - name: accuracy_metrics
+    columns:
+      - name: detection_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['True Positive', 'False Positive', 'False Negative']

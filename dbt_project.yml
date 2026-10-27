@@ -1,24 +1,16 @@
-name: jaffle_shop_7
+name: smart_grid
 
-profile: jaffle_shop_7
+profile: smart_grid
 
-seed-paths: ["seeds"]
 model-paths: ["models"]
 macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+test-paths: ["tests"]
 clean-targets:
   - "target"
   - "dbt_packages"
 
-seeds:
-  # Builds seeds into '<your_schema_name>_raw'
-  jaffle_shop_7:
-    +schema: raw
-
 models:
-  jaffle_shop_7:
-    +static_analysis: strict
-    # Materialize staging models as views, and marts as tables
-    staging:
-      +materialized: view
+  smart_grid:
     marts:
       +materialized: table
